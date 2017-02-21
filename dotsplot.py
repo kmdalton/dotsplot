@@ -90,23 +90,23 @@ def get_pairwise_matches(encoded_seqA, encoded_seqB):
 
 
 if __name__=="__main__":
-    seqlen1 = 1000
-    seqlen2 = 500
+    seqlenA = 1000 #shorter seq
+    seqlenB = 1500 #longer seq
     k = 4
-    seq = ''.join(np.random.choice(['A', 'T', 'C', 'G'], seqlen1))
+    seqA = ''.join(np.random.choice(['A', 'T', 'C', 'G'], seqlenA))
 
-    encoded_seq, kmer_encoding = encode_sequence(seq, k)
-    X,Y = get_matches(encoded_seq)
+    encoded_seqA, kmer_encoding = encode_sequence(seqA, k)
+    X,Y = get_matches(encoded_seqA)
     plt.scatter(X, Y)
     plt.title("{}-mer Self Similarity".format(k))
     plt.show()
     plt.title("{}-mer Self Similarity".format(k))
-    seq2 = ''.join(np.random.choice(['A', 'T', 'C', 'G'], seqlen2))
-    encoded_seq2, kmer_encoding = encode_sequence(seq2, k, kmer_encoding=kmer_encoding)
 
-    X,Y = get_pairwise_matches(encoded_seq, encoded_seq2)
-    print(encoded_seq)
-    print(encoded_seq2)
+    #seqB will be seqB + a random string
+    seqB = seqA + ''.join(np.random.choice(['A', 'T', 'C', 'G'], seqlenB - seqlenA))
+    encoded_seqB, kmer_encoding = encode_sequence(seqB, k, kmer_encoding=kmer_encoding)
+
+    X,Y = get_pairwise_matches(encoded_seqB, encoded_seqA)
     plt.scatter(X,Y)
     plt.title("{}-mer Pairwise Similarity".format(k))
     plt.show()
